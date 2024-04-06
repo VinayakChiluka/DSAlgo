@@ -50,7 +50,7 @@ public class NQueenProblem {
                 col[c] = true;
                 nDia[c+r] = true;
                 rDia[c-r+n-1] = true;
-                solve(board, col, nDia, rDia, n, r+1);
+                solve(board, col, nDia, rDia, n, r+1, results);
                 board[r][c] = false;
                 col[c] = false;
                 nDia[c+r] = false;
