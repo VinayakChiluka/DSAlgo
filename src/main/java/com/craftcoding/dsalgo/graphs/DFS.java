@@ -6,9 +6,11 @@ import java.util.List;
 public class DFS {
     private final AdjacencyListUndirectedGraph adjacencyListUndirectedGraph;
     private final boolean[] visited;
+    private final int[] components;
     public DFS(int n){
         adjacencyListUndirectedGraph = new AdjacencyListUndirectedGraph(n);
         visited = new boolean[n];
+        components = new int[n];
     }
 
     public void add(int src, int des){
@@ -30,6 +32,30 @@ public class DFS {
         }
     }
 
+    public void dfs_connectedComponent(int at, int id){
+        if(visited[at])
+            return;
+        components[at] = id;
+
+        System.out.print(at + " -> ");
+
+        visited[at] = true;
+        for(Integer node : getNeighbours(at)){
+            dfs(node);
+        }
+    }
+
+    public int countNumberOfConnectedComponent(){
+        int count  = 0;
+        for(int i=0;i<components.length;i++){
+            if(!visited[i]) {
+                dfs_connectedComponent(i, count);
+                count = count + 1;
+            }
+        }
+        return count;
+    }
+
     public static void main(String[] args) {
         DFS dfs = new DFS(13);
         dfs.getNeighbours(0).addAll(Arrays.asList(1, 8, 9));
@@ -46,6 +72,9 @@ public class DFS {
         dfs.getNeighbours(11).addAll(Arrays.asList(7,10));
         dfs.getNeighbours(12).addAll(Arrays.asList());
 
-        dfs.dfs(0);
+     //   dfs.dfs(0);
+        int ccs = dfs.countNumberOfConnectedComponent();
+        System.out.println();
+        System.out.println(ccs);
     }
 }
