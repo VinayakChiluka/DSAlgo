@@ -41,19 +41,19 @@ public class DFS {
 
         visited[at] = true;
         for(Integer node : getNeighbours(at)){
-            dfs(node);
+            dfs_connectedComponent(node, id);
         }
     }
 
     public int countNumberOfConnectedComponent(){
-        int count  = 0;
+        int count  = 1;
         for(int i=0;i<components.length;i++){
             if(!visited[i]) {
                 dfs_connectedComponent(i, count);
                 count = count + 1;
             }
         }
-        return count;
+        return count-1;
     }
 
     public static void main(String[] args) {
@@ -76,5 +76,9 @@ public class DFS {
         int ccs = dfs.countNumberOfConnectedComponent();
         System.out.println();
         System.out.println(ccs);
+
+        for(int i=0;i < dfs.visited.length;i++){
+            System.out.println(dfs.components[i] + " ");
+        }
     }
 }
