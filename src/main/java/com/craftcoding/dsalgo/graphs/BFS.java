@@ -19,12 +19,41 @@ public class BFS {
         adj[v].add(w);
     }
 
+    LinkedList<Integer> shortedPath(int s, int e){
+        boolean[] visited = new boolean[numVertices];
+        int[] prev = new int[numVertices];
+        Arrays.fill(prev, -1); // Fill prev array with -1 to indicate no previous node
+        Queue<Integer> queue = new LinkedList<>();
 
+        visited[s] = true;
+        queue.add(s);
+        while(!queue.isEmpty()){
+            int node = queue.poll();
+            for (Integer neighbor : adj[node]) {
+                if(!visited[neighbor]){
+                    visited[neighbor] = true;
+                    prev[neighbor] = node;
+                    queue.add(neighbor);
+                }
+            }
+        }
+
+        LinkedList<Integer> path = new LinkedList<>();
+        for(int at=e; at != -1; at = prev[at]){
+            path.addFirst(at);
+        }
+
+        if(path.get(0) == s)
+            return path;
+        else
+            return new LinkedList<>();
+
+    }
 
     // Function to perform BFS traversal from a given source s
     void BFS(int s) {
         // Mark all the vertices as not visited (by default set as false)
-        boolean visited[] = new boolean[numVertices];
+        boolean[] visited = new boolean[numVertices];
 
         // Create a queue for BFS
         LinkedList<Integer> queue = new LinkedList<Integer>();
@@ -63,6 +92,8 @@ public class BFS {
 
         System.out.println("Following is Breadth First Traversal (starting from vertex 0)");
 
-        g.BFS(0);
+     //   g.BFS(0);
+
+        System.out.println( g.shortedPath(0, 3));
     }
 }
